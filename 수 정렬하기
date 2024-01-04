@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+/*int comp(int* a, int* b) {
+	return *a - *b;
+}*/
+
+int main() {
+	int N;
+	int numarr[1001] = { 0 };
+	scanf("%d", &N);
+	for (int i = 0; i < N; i++) {
+		scanf("%d", &numarr[i]);
+	}
+	//qsort(numarr, N, sizeof(numarr[N]), comp);
+	int temp;
+	for (int j = 0; j < N-1; j++) {
+		for (int k = j + 1; k < N; k++) {
+			if (numarr[j] > numarr[k]) {
+				temp = numarr[j];
+				numarr[j] = numarr[k];
+				numarr[k] = temp;
+			}
+		}
+	}
+	for (int p = 0; p < N; p++) {
+		printf("%d\n", numarr[p]);
+	}
+	return 0;
+}
