@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+int main() {
+	int N;
+	int numarr[10] = { 0 };
+	scanf("%d", &N);
+	while (N != 0) {
+		numarr[N % 10]++;
+		N /= 10;
+	}
+	for (int i = 9; i >= 0; i--) {
+		while (numarr[i] != 0) {
+			printf("%d", i);
+			numarr[i]--;
+		}
+	}
+	return 0;
+}
