@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+int main() {
+	int N, k;
+	int x[1000] = { 0 }; //score
+	scanf("%d %d", &N, &k);
+	for (int i = 0; i < N; i++) {
+		scanf("%d", &x[i]);
+	}
+	int temp;
+	for (int p = 0; p < N - 1; p++) {
+		for (int q = p + 1; q < N; q++) {
+			if (x[p] < x[q]) {
+				temp = x[p];
+				x[p] = x[q];
+				x[q] = temp;
+			}
+		}
+	}
+	printf("%d\n", x[k - 1]);
+	return 0;
+}
