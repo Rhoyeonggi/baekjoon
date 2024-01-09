@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+struct coordi {
+	int x;
+	int y;
+};
+
+int comp(const struct coordi* a, const struct coordi* b) {
+	if ((*a).y == (*b).y) {
+		if ((*a).x > (*b).x) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
+	}
+	else if ((*a).y > (*b).y) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+
+
+int main() {
+	int N;
+	struct coordi point[100000] = { 0 };
+	scanf("%d", &N);
+	for (int c = 0; c < N; c++) {
+		scanf("%d %d", &point[c].x, &point[c].y);
+	}
+	qsort(point, N, sizeof(struct coordi), comp);
+	for (int i = 0; i < N; i++) {
+		printf("%d %d\n", point[i].x, point[i].y);
+	}
+	return 0;
+}
