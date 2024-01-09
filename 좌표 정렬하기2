@@ -7,16 +7,18 @@ struct coordi {
 	int y;
 };
 
-int comp(const struct coordi* a, const struct coordi* b) {
-	if ((*a).y == (*b).y) {
-		if ((*a).x > (*b).x) {
+int comp(const void* a, const void* b) {
+    struct coordi* p1 = (struct coordi*)a;
+    struct coordi* p2 = (struct coordi*)b;
+	if ((*p1).y == (*p2).y) {
+		if ((*p1).x > (*p2).x) {
 			return 1;
 		}
 		else {
 			return 0;
 		}
 	}
-	else if ((*a).y > (*b).y) {
+	else if ((*p1).y > (*p2).y) {
 		return 1;
 	}
 	else {
