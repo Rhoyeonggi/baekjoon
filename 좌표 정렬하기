@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+struct coordi {
+	int x;
+	int y;
+};
+
+int comp(const void* a, const void* b) { // use void* -> I think there're no variable in line 25 when using 'comp'
+	struct coordi* p1 = (struct coordi*)a;
+	struct coordi* p2 = (struct coordi*)b;
+	if (p1->x == p2->x) return p1->y - p2->y;
+	else return (*p1).x - (*p2).x; // *a - *b >0 : chage // else : not chage
+}
+
+
+int main() {
+	int N;
+	struct coordi point[100000] = { 0 };
+	scanf("%d", &N);
+	for (int c = 0; c < N; c++) {
+		scanf("%d %d", &point[c].x, &point[c].y);
+	}
+	qsort(point, N, sizeof(struct coordi), comp);
+	for (int i = 0; i < N; i++) {
+		printf("%d %d\n", point[i].x, point[i].y);
+	}
+	return 0;
+}
