@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct member {
+	int age;
+	char name[101];
+	int idx;
+}identi;
+
+int comp(const void* a, const void* b) {
+	identi* m1 = (identi*)a;
+	identi* m2 = (identi*)b;
+	if (m1->age == m2->age) return (*m1).idx - (*m2).idx;
+	else return m1->age - m2->age;
+}
+
+int main() {
+	int N;
+	identi mbr[100000] = { 0 };
+	scanf("%d", &N);
+	for (int m = 0; m < N; m++) {
+		scanf("%d %s", &mbr[m].age, mbr[m].name);
+		mbr[m].idx = m;
+	}
+	qsort(mbr, N, sizeof(identi), comp);
+	for (int i = 0; i < N; i++) {
+		printf("%d %s\n", mbr[i].age, (*(mbr + i)).name);
+	}
+	return 0;
+}
