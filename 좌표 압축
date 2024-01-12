@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct coordi {
+	int num;
+	int idx;
+}info;
+
+int comp(const void* a, const void* b) {
+	info* x1 = (info*)a;
+	info* x2 = (info*)b;
+	return (*x1).num - (*x2).num;
+}
+
+int main() {
+	int N;
+	scanf("%d", &N);
+	int* ans = (int*)calloc(N, sizeof(int));
+	info* xco = (info*)calloc(N, sizeof(info));
+	for (int n = 0; n < N; n++) {
+		scanf("%d", &xco[n].num);
+		(xco + n)->idx = n;
+	}
+	qsort(xco, N, sizeof(info), comp);
+	int c_idx = 0;
+	for (int i = 0; i < N; i++) {
+		ans[xco[i].idx] = c_idx;
+		if (i + 1 != N && (xco + i)->num != (xco + i + 1)->num)c_idx++;
+	}
+	for (int c = 0; c < N; c++) {
+		printf("%d ", ans[c]);
+	}
+	free(xco);
+	free(ans);
+	return 0;
+}
