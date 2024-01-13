@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+	int N;
+	scanf("%d", &N);
+	int* num = (int*)calloc(10000, sizeof(int));
+	for (int i = 0; i < N; i++) {
+		int sn = 0;
+		scanf("%d", &sn);
+		num[sn - 1]++;
+	}
+	int idx = 0;
+	for (int c = 0; c < N; ) {
+		if (num[idx] == 0) {
+			idx++;
+			continue;
+		}
+		while (num[idx] != 0) {
+			printf("%d\n", idx + 1);
+			num[idx]--;
+			c++;
+		}
+		idx++;
+	}
+	return 0;
+}
