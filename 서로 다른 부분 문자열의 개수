@@ -1,0 +1,34 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+int main() {
+	char S[1001] = { 0 };
+	scanf("%s", S);
+	int s_len = strlen(S);
+	int cnt = 0;
+	int siz = 1;
+	int idx = 0;
+	while (siz < s_len) {
+		int check = 0;
+		int comp = idx + 1;
+		while (comp + siz <= s_len) {
+			if (strncmp(&S[idx], &S[comp], siz) == 0) {
+				check++;
+				break;
+			}
+			comp++;
+		}
+		if (check == 0) cnt++;
+		if (idx + siz == s_len - 1) {
+			cnt++;
+			siz++;
+			idx = 0;
+			continue;
+		}
+		idx++;
+	}
+	printf("%d", cnt + 1);
+	return 0;
+}
