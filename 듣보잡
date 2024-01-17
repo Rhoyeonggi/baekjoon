@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int comp(char* a, char* b) {
+	return strcmp(a, b);
+}
+
+int main() {
+	int N, M;
+	int cnt = 0;
+	char NH[1000001][21] = { 0 };
+	char NL[21];
+	char answer[500001][21] = { 0 };
+	scanf("%d %d", &N, &M);
+	for (int i = 0; i < N + M; i++) {
+		scanf("%s", NH[i]);
+	}
+	qsort(NH, M + N, sizeof(NH[1000001]), comp);
+	for (int nm = 0; nm < N + M; nm++) {
+		if (strcmp(NH[nm], NH[nm + 1]) == 0) {
+			strcpy(answer[cnt], NH[nm]);
+			nm++;
+			cnt++;
+		}
+	}
+	printf("%d\n", cnt);
+	for (int c = 0; c < cnt; c++) {
+		printf("%s\n", answer[c]);
+	}
+	return 0;
+}
