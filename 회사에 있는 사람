@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct company {
+	char name[6];
+	char attend[6];
+}info;
+
+int comp(info* a, info* b) {
+	return strcmp(b->name, a->name); // 사전 역순으로 정렬
+}
+
+int main() {
+	int idx = 0;
+	info person[1000001] = { 0 };
+	int n;
+	char answer[1000001][6] = { 0 };
+	scanf("%d", &n);
+	for (int s = 0; s < n; s++) {
+		scanf("%s %s", person[s].name, person[s].attend);
+	}
+	qsort(person, n, sizeof(info), comp);
+	for (int i = 0; i < n; i++) { // 맨 끝에는 '\0'이 있기때문에 상관 없다
+		if (strcmp(person[i].name, person[i + 1].name) == 0) {
+			i++; // 만약다시 나갔다가 다시 들어온다고 해도 2칸을 이동했을 떄에 두 문자열이 같지 않다면 회사에 남아 있는 것이다
+			continue;
+		}
+		else {
+			strcpy(answer[idx], person[i].name);
+			idx++;
+		}
+	}
+	for (int p = 0; p < idx; p++) {
+		printf("%s\n", answer[p]);
+	}
+	return 0;
+}
