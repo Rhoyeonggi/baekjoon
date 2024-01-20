@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct poketmon { // 이름과 들어온 순서를 집어 넣기
+	char name[21];
+	int idx;
+}info;
+
+int comp_name(info* a, info* b) {
+	return strcmp((*a).name, (*b).name);
+}
+
+int idxsearch(info* book_name, int start, int end, char* target) { // 사전에서 이름의 위치 찾기
+	int mid = (start + end) / 2;
+	if (start > end) return 0;
+	if (strcmp(book_name[mid].name, target) == 0) return mid;
+	else if (strcmp(book_name[mid].name, target) > 0) return idxsearch(book_name, start, mid - 1, target);
+	else return idxsearch(book_name, mid + 1, end, target);
+}
+
+int main() {
+	int N, M;
+	scanf("%d %d", &N, &M);
+	info poket_book_name[100001] = { 0 }; // 사전순으로 정렬
+	info poket_book_idx[100001] = { 0 }; // idx로 정렬
+	info answer[100001] = { 0 };
+	for (int i = 0; i < N; i++) {
+		scanf("%s", poket_book_name[i].name);
+		strcpy(poket_book_idx[i].name, poket_book_name[i].name);
+		poket_book_name[i].idx = poket_book_idx[i].idx = i + 1;
+	}
+	qsort(poket_book_name, N, sizeof(info), comp_name);
+	char target[21] = { 0 };
+	for (int j = 0; j < M; j++) {
+		int idx = 0;
+		scanf("%s", target);
+		if (target[0] - '0' <= 9) { // 숫자가 입력 되었을 경우
+			for (int n = 0; n < strlen(target); n++) { // 문자로 받은 숫자를 정수 형태로 변환하여 idx찾기
+				idx *= 10;
+				idx += target[n] - '0';
+			}
+			strcpy(answer[j].name, poket_book_idx[idx - 1].name); // idx는 들어오는 순서대로 정렬이 되므로 이름순으로만 따로 정렬 해준다
+		}
+		else { // 문자가 입력 되었을 경우
+			idx = idxsearch(poket_book_name, 0, N, target);
+			answer[j].idx = poket_book_name[idx].idx;
+		}
+	}
+	for (int p = 0; p < M; p++) {
+		if (answer[p].idx != 0) printf("%d\n", answer[p].idx);
+		else printf("%s\n", answer[p].name);
+	}
+	return 0;
+}
