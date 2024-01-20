@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int comp(int* a, int* b) {
+	return *a - *b;
+}
+
+int lowersearch(int* arr, int start, int end, int t) {
+	int check = 0;
+	while (start < end) {
+		int mid = (start + end) / 2;
+		if (arr[mid] == t) check++;
+		if (arr[mid] >= t) end = mid;
+		else start = mid + 1;
+	}
+	if (check == 0) return -2; // target을 못 찾을 경우 0을 집어 넣기 위해 찾았는지 여부를 check한다
+	return start;
+}
+
+int uppersearch(int* arr, int start, int end, int t) { // 같은 값이 있을 수 있기 때문에 lower/upper bound 사용한다
+	while (start < end) {
+		int mid = (start + end) / 2;
+		if (arr[mid] > t) end = mid;
+		else start = mid + 1;
+	}
+	return end;
+}
+
+int main() {
+	int M, N;
+	scanf("%d", &N);
+	int* n_arr = (int*)calloc(N, sizeof(int));
+	for (int n = 0; n < N; n++) {
+		scanf("%d", &n_arr[n]);
+	}
+	scanf("%d", &M);
+	qsort(n_arr, N, sizeof(int), comp);
+	int target;
+	int* answer = (int*)calloc(M, sizeof(int));
+	for (int m = 0; m < M; m++) {
+		int cnt = 0;
+		int idxl;
+		scanf("%d", &target);
+		idxl = lowersearch(n_arr, 0, N, target);
+		if (idxl == -2) {
+			answer[m] = 0;
+			continue;
+		}
+		else {
+			answer[m] = uppersearch(n_arr, 0, N, target) - idxl;
+		}
+	}
+	for (int a = 0; a < M; a++) {
+		printf("%d ", answer[a]);
+	}
+	return 0;
+}
