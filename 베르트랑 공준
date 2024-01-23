@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int isprime(int target_num) {
+	if (target_num == 2 || target_num == 3) return 1;
+	for (int i = 2; i * i <= target_num; i++) {
+		if (i % 2 == 0 && target_num % 2 != 0) continue; // 2로 나눴을 때 안 나눠 떨어지면 다를 짝수들은 볼 필요가 없다
+		if (target_num % i == 0) return 0;
+	}
+	return 1;
+}
+
+int main() {
+	int n;
+	while (1) {
+		scanf("%d", &n);
+		if (n == 0) break;
+		int answer = 0;;
+		for (int num = n + 1; num <= 2 * n; num++) {
+			if (isprime(num)) answer++;
+		}
+		printf("%d\n", answer);
+	}
+	return 0;
+}
