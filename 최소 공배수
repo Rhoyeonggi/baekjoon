@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int GCD(int a, int b) { //유클리드 호제법을 이용하여 한쪽이 0이 될 때까지 반복한다
+	if (a == 0 || b == 0) return a + b;
+	if (a > b) {
+		return GCD(b, a % b);
+	}
+	else if (b > a) {
+		return GCD(a, b % a);
+	}
+	else return a; // 같으면 그 자체로 최대공약수 이다
+}
+
+int LCM(int a,int b) {
+	return (a * b) / GCD(a, b); // 최대공약수가 2번 곱해지기 때문에 나눠준다
+}
+
+int main() {
+	int A, B;
+	int T;
+	scanf("%d", &T);
+	for (int t = 0; t < T; t++) {
+		scanf("%d %d", &A, &B);
+		printf("%d\n", LCM(A, B));
+	}
+	return 0;
+}
