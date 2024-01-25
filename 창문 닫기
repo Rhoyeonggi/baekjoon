@@ -1,0 +1,13 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+	int N;
+	int cnt = 0;
+	scanf("%d", &N);
+	for (int i = 1; i * i <= N; i++) { // 약수의 개수가 홀수 이면 문이 열려 있다
+		cnt++; // 약수의 개수가 홀수는 제곱수 밖에 없다
+	}
+	printf("%d", cnt);
+	return 0;
+}
