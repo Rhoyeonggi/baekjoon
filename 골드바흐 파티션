@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int prime_arr[1000001] = { 0 };
+
+void eratos_sieve() { // 에라토스테네스의 체
+	for (int i = 2; i < 1000001; i++) {
+		prime_arr[i] = i;
+	}
+	for (int j = 2; j < 1000001; j++) { // 자기 자신을 제외한 자신의 배수들 삭제
+		if (prime_arr[j] == 0) continue;
+		for (int d = 2 * j; d < 1000001; d += j) { // 새로운 변수를 써도 되지만 자기 자신을 계속 더해나가는 것 역시 곱으로 표현하여 해석하면 배수 이다
+			prime_arr[d] = 0;
+		}
+	}
+}
+
+int main() {
+	int T;
+	int N;
+	scanf("%d", &T);
+	eratos_sieve();
+	for (int i = 0; i < T; i++) {
+		int c = 0;
+		scanf("%d", &N);
+		for (int n = 2; n <= N / 2; n++) {
+			if (prime_arr[n] + prime_arr[N - n] == N) c++; // 숫자와 index가 같기 때문에 두 수를 더했을때 N이 되면 해당 자리가 소수라는 것이다 
+		}
+		printf("%d\n", c);
+	}
+	return 0;
+}
