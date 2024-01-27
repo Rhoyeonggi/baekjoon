@@ -1,0 +1,21 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int GCD(int a, int b) { // 유클리드 호제법 이용
+	if (a == 0 || b == 0) return a + b;
+	if (a > b) return GCD(b, a % b);
+	else if (b > a) return GCD(a, b % a);
+	else return a;
+}
+
+int main() {
+	int numerator_1, numerator_2;
+	int denominator_1, denominator_2;
+	int ans_n, ans_d;
+	scanf("%d %d", &numerator_1, &denominator_1);
+	scanf("%d %d", &numerator_2, &denominator_2);
+	ans_n = numerator_1 * denominator_2 + numerator_2 * denominator_1; // 분모를 통분하여 계산 한다
+	ans_d = denominator_1 * denominator_2;
+	printf("%d %d", ans_n / GCD(ans_n, ans_d), ans_d / GCD(ans_n, ans_d)); // 최대공약수로 나누어주면 기약분수로 나타낼 수 있다
+	return 0;
+}
