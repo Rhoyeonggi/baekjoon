@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+int GCD(int a, int b) {
+	if (a == 0 || b == 0) return a + b;
+	if (a > b) return GCD(b, a % b);
+	else if (a < b) return GCD(a, b % a);
+	else return a;
+}
+
+int main() {
+	int n;
+	int tree[100001] = { 0 };
+	int diff[100000] = { 0 };
+	int cnt = 0;
+	scanf("%d", &n);
+	for (int i = 0; i < n; i++) {
+		scanf("%d", &tree[i]);
+	}
+	for (int j = 0; j < n - 1; j++) {
+		diff[j] = tree[j + 1] - tree[j]; // 두 수의 차이의 최대공약수가 떨어진 간격이 되므로 차이를 구해준다
+	}
+	int gcd_save = diff[0];
+	for (int d = 1; d < n - 1; d++) {
+		gcd_save = GCD(gcd_save, diff[d]); // 2개씩 묶어서 최대공약수를 구해준다
+	}
+	printf("%d", (tree[n - 1] - tree[0]) / gcd_save + 1 - n); // 처음 부터 끝까지 일정 간격으로 나무가 다 있다고 가정하고 gcd로 나눠주면 몇개가 있는지 알 수 있다
+	return 0; // 이때 미리 심어져 있는 나무의 개수를 빼준다면 새로 심어야 하는 나무의 개수를 알 수 있다
+}
