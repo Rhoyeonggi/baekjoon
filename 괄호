@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+	int T;
+	char ps[51] = { 0 };
+	scanf("%d", &T);
+	for (int i = 0; i < T; i++) {
+		int left = 0, right = 0;
+		int bp = 0; // break할지 말지
+		scanf("%s", ps);
+		int len = strlen(ps);
+		for (int j = 0; j < len; j++) {
+			if (ps[j] == '(') left++; // '('이거 일때 left증가
+			else right++; // ')'이거 일때 right 증가
+			if (right > left) { // 여는 괄호보다 닫는 괄호가 더 많을 때, left = right여도 right가 많은 순간이 존재하면 안 된다
+				printf("NO\n");
+				bp++; // break했을 때 위 경우는 그냥 지나가기
+				break;
+			}
+		}
+		if (bp) continue;
+		else {
+			if (right == left) printf("YES\n"); // 남는 경우중에 두 값이 같으면 무조건 가능한 괄호 형태이다
+			else printf("NO\n"); // 닫는 괄호가 부족할 때
+		}
+	}
+	return 0;
+}
