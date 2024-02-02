@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+	int N, K;
+	scanf("%d %d", &N, &K);
+	int* num_arr = (int*)calloc(N, sizeof(int));
+	int cnt = 0;
+	int ans_idx = 0;
+	int pop_idx = K;
+	int* answer = (int*)calloc(N, sizeof(int));
+	while (1) {
+		if (pop_idx > N) pop_idx %= N;
+		if (num_arr[pop_idx - 1] == 0) {
+			num_arr[pop_idx - 1]++;
+			answer[ans_idx] = pop_idx;
+			ans_idx++;
+			cnt++;
+			if (cnt == N) break;
+			for (int c = 1; c < K;) { // 이미 pop한 숫자에 대해서는 그냥 지나가기
+				if (pop_idx > N) pop_idx %= N;
+				if (num_arr[pop_idx - 1] != 0) pop_idx++;
+				else {
+					c++;
+					pop_idx++;
+				}
+			}
+		}
+		else pop_idx++;
+	}
+	printf("<");
+	for (int i = 0; i < N; i++) {
+		printf("%d", answer[i]);
+		if (i + 1 == N) break;
+		printf(", ");
+	}
+	printf(">");
+	return 0;
+}
