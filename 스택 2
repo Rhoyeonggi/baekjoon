@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+	int command_num; // 1~8의 명령을 내리는 숫자
+	int num_deck[1000001] = { 0 }; // 0은 비어있다는 것을 의미
+	int test_case; // N개의 명령을 수행할 것이다
+	int cnt_int = 0; // 정수의 개수 count
+	int num, idx = 0;
+	scanf("%d", &test_case);
+	for (int t = 0; t < test_case; t++) {
+		scanf("%d", &command_num);
+		switch (command_num) {
+		case 1:
+			scanf("%d", &num);
+			num_deck[idx++] = num;
+			cnt_int++; // 정수가 들어왔다
+			break;
+		case 2:
+			if (cnt_int == 0) printf("-1\n");
+			else {
+				cnt_int--; //가장 위에 있는 정수를 빼내면 정수 개수가 1 감소한다
+				printf("%d\n", num_deck[--idx]); // idx는 항상 비어있는 칸 중에서 가장 작은 idx를 가리키고 있어서 idx를 하나 줄이면 가장 위에 있는 숫자 접근
+				num_deck[idx] = 0;
+			}
+			break;
+		case 3:
+			printf("%d\n", cnt_int); // 정수의 개수는 cnt_int에 저장
+			break;
+		case 4:
+			if (cnt_int == 0) printf("1\n");
+			else printf("0\n");
+			break;
+		case 5:
+			if (cnt_int == 0) printf("-1\n");
+			else printf("%d\n", num_deck[idx - 1]); // case 2와 같은 이유로 idx-1에 있는 값을 뽑아낸다
+			break;
+		default: // 이 부분은 문제에 사용 안 될 수도 있지만 의도는 5 이외의 값을 입력받으면 다시 입력받게 하기 위함이다
+			t--; // for문을 돌릴때 t가 1 증가 하는데 continue해서 그냥 올라가면 시행을 한 것으로 계산 되기에 다시 1을 감소 시켜 시행 횟수에 포함을 시키지 않는다
+			continue;
+		}
+	}
+	return 0;
+}
