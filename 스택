@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+	int N;
+	int num_stack[10001] = { 0 };
+	int stack_idx = -1; // -1은 stack에 숫자가 없다는 의미이다
+	scanf("%d", &N);
+	for (int i = 0; i < N; i++) {
+		char command_stack[7] = { 0 };
+		scanf("%s", command_stack);
+		if (strcmp(command_stack, "push") == 0) {
+			scanf("%d", &num_stack[++stack_idx]); // idx를 -1부터 시작 했기때문에 미리 1을 증가해 숫자를 넣어준다
+		}
+		else if (strcmp(command_stack, "pop") == 0) {
+			if (stack_idx > -1) {
+				printf("%d\n", num_stack[stack_idx--]); // idx는 마지막에 들어간 위치를 가리키고있기에 printf이후에 idx를 1 감소해준다
+			}
+			else {
+				printf("%d\n", stack_idx); // 없을땐 stack_idx가 -1이다
+			}
+		}
+		else if (strcmp(command_stack, "size") == 0) {
+			printf("%d\n", stack_idx + 1); // stack_idx가 -1부터 시작했기에 없을때 -1, 1개일때 0...따라서 n개일때 n-1이므로 1을 더해서 printf해준다
+		}
+		else if (strcmp(command_stack, "empty") == 0) {
+			if (stack_idx == -1) printf("1\n");
+			else printf("0\n");
+		}
+		else if (strcmp(command_stack, "top") == 0) {
+			if (stack_idx == -1) printf("%d\n", stack_idx);
+			else printf("%d\n", num_stack[stack_idx]);
+		}
+	}
+	return 0;
+}
