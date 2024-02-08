@@ -1,0 +1,16 @@
+#include <stdio.h>
+
+int main() {
+	int A, B, C;
+	int arr[10] = { 0 }; // 숫자가 안 나올 경우 0을 출력해야 하기 때문에 0으로 초기화 해둔다
+	scanf("%d %d %d", &A, &B, &C);
+	int num = A * B * C;
+	while (num != 0) {
+		arr[num % 10]++; // 0~9까지의 숫자만 나오기 때문에 10칸의 배열을 만들어주고 10으로 나눈 나머지에 해당하는 값을 증가해 준다
+		num /= 10; // 가장 끝자리 숫자를 버려준다
+	}
+	for (int i = 0; i < 10; i++) {
+		printf("%d\n", arr[i]);
+	}
+	return 0;
+}
