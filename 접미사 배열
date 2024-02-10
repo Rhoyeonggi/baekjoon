@@ -1,0 +1,21 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int comp(char** a, char** b) { // 왜 char**로 들어가야 하나
+	return strcmp(*a, *b); // 왜 strcmp에 *a, *b가 들어가는가
+}
+
+int main() {
+	char str[1001] = { 0 };
+	scanf("%s", str);
+	char* answer[1001] = { 0 }; // 1001개의 포인터 생성 마지막은 NULL
+	for (int i = 0; i < strlen(str); i++) {
+		answer[i] = &str[i]; // i번째 포인터는 str배열의 i번째 위치의 주소를 가리키고 있다 str = happy일때 answer[0] = h의 주소, answer[1] = a의 주소
+	}
+	qsort(answer, strlen(str), sizeof(char*), comp); // 정렬하는데 어떤것의 주소를 넣어야 하면 sizeof에는 어떤 것이 들어가야 하는가
+	for (int p = 0; p < strlen(str); p++) { // qsort진행할 때 char*을 해도 되고 answer[0]을 해도 된다 왜 그런가
+		printf("%s\n", answer[p]);
+	}
+	return 0;
+}
