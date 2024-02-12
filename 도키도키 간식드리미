@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+	int student_num;
+	int N;
+	scanf("%d", &N); // 몇명의 학생이 줄 서있는가
+	int* arr = (int*)calloc(N + 1, sizeof(int)); // 한 명씩 설 수 있는 공간을 stack으로 구현
+	int order = 1;
+	int stack_idx = -1;
+	for (int n = 0; n < N; n++) { // 학생이 N명이므로 N번 반복 실행 하는데 
+		scanf("%d", &student_num); // 현재 줄 서있는 곳에 있는 사람
+		if (order == student_num) {
+			order++;
+			while (stack_idx != -1 && arr[stack_idx] == order) { // 한 명씩 설 수 있는 공간에 사람이 있고 제일 위에 사람이 해당 순어일 때
+				arr[stack_idx--] = 0; // order와 student_num이 같을 때 order값이 바뀌므로 stack공간이 비어있지 않을 경우 가장 위에 있는 값과 비교해 준다
+				order++; // 가장 위에 있는 값과 비교했을 때 같으면 위에 있는 사람을 빼주고 순서를 1증가해 준다
+			} // 순서가 변하였으므로 stack에 있는 다음 사람도 받을 수 있는지 확인해 주고 못 받을 경우 '현재 줄 서있는 곳'에 있는 사람을 확인해 준다
+		}
+		else { // order와 student_num이 같지 않으면 stack에는 order과 다른 값들만 들어가 있기 때문에 stack의 제일 위에 있는 값과 비교할 필요가 없다
+			arr[++stack_idx] = student_num;
+		}
+	}
+	stack_idx == -1 ? printf("Nice") : printf("Sad"); // '현재 줄 서있는 곳'에 있는 사람을 위에서 다 확이 하기 떄문에 stack이 비어있으면 모든 사람이 다 받아간 것을 의미한다
+	return 0;
+}
