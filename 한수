@@ -1,0 +1,32 @@
+#include <stdio.h>
+
+int main() {
+	int num;
+	int cnt = 0;
+	scanf("%d", &num);
+	if (num < 100) {
+		printf("%d\n", num);
+		return 0;
+	}
+	else {
+		for (int i = 100; i <= num; i++) {
+			int cal_num = i;
+			int diff[4] = { 0 }; // 차이값을 넣는 배열
+			int idx = -1;
+			int possible = 1;
+			while (cal_num / 10 != 0) { // N자리 숫자일 때 차이는 N-1개가 생긴다
+				diff[++idx] = (cal_num / 10) % 10 - cal_num % 10; // 나머지를 이용해서 차이를 구한다
+				cal_num /= 10;
+			}
+			for (int j = 0; j < idx; j++) {
+				if (diff[j + 1] != diff[j]) { // 차이가 같지 않으면 한수가 아니므로 cnt를 증가하지 않는다
+					possible = 0;
+					break;
+				}
+			}
+			if (possible) cnt++;
+		}
+		printf("%d\n", 99 + cnt);
+	}
+	return 0;
+}
