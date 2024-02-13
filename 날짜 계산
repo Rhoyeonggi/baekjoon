@@ -1,0 +1,20 @@
+#include <stdio.h>
+
+int main() {
+	int E, S, M;
+	int e_year = 1, s_year = 1, m_year = 1;
+	int year = 1;
+	scanf("%d %d %d", &E, &S, &M);
+	while (1) {
+		if (e_year == E && s_year == S && m_year == M) break;
+		year++;
+		e_year %= 15; // 해당 범위를 벗어나면 다시 1로 돌아가야 하기 때문에 나머지를 이요해 준다
+		s_year %= 28;
+		m_year %= 19;
+		e_year++; // 나머지가 0이 안나오게 하는 작업
+		s_year++;
+		m_year++;
+	}
+	printf("%d", year);
+	return 0;
+}
