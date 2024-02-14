@@ -1,0 +1,37 @@
+#include <stdio.h>
+
+int prime_arr[4000001] = { 0 };
+
+void eratos_sieve() { // 에라토스테네스의 체를 이용하여 소수 구하기
+	for (int i = 2; i < 4000001; i++) {
+		prime_arr[i] = 1;
+	}
+	for (int j = 2; j < 4000001; j++) {
+		if (prime_arr[j] == 0) continue;
+		for (int p = j + j; p < 4000001; p += j) {
+			prime_arr[p] = 0; // 배열 값이 1이면 소수 0이면 소수가 아니다
+		}
+	}
+}
+
+int main() {
+	int num;
+	scanf("%d", &num);
+	eratos_sieve(); // 소수 배열 호출
+	int cnt = 0;
+	for (int n = 2; n <= num;) {
+		int sum = 0;
+		int prime_idx = n; // 2는 소수이기 때문에 2부터 시작을 했고 소수를 기준으로 시작한다. 즉, prime_idx시작은 2, 3, 5, 7, ..., 41, ...등 소수이다
+		while (sum < num) {
+			if (prime_arr[prime_idx]) sum += prime_idx; // 소수일 경우에만 더해준다
+			if (sum == num) cnt++; // 합이 입력받은 num이랑 같을 경우에 개수를 세준다
+			prime_idx++; // 연속된 소수이므로 prime_idx를 1씩 증가하면서 소수를 찾는다
+		}
+		while (1) { // 다음 소수의 index 찾는 과정
+			n++; // 다음 소수를 찾을때 까지 n을 증가해 준다
+			if (prime_arr[n] == 1) break; // 다음 소수를 찾으면 멈춘다
+		}
+	}
+	printf("%d\n", cnt);
+	return 0;
+}
