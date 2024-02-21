@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct bank { // 구조체 복습하기 위해 구조체 형식으로 작성을 해 봤다
+	int time;
+	int idx;
+}wdrw; // withdraw 준말
+
+int comp(wdrw* a, wdrw* b) {
+	return a->time - b->time;
+}
+
+int main() { // idx가 0인것부터 누적되는 합계를 생각한다
+	int n;
+	int time_sum = 0;
+	wdrw atm[1001] = { 0 };
+	scanf("%d", &n);
+	for (int i = 0; i < n; i++) {
+		scanf("%d", &(atm + i)->time);
+		atm[i].idx = i + 1;
+	}
+	qsort(atm, n, sizeof(wdrw), comp); // 작은 숫자가 앞으로 올 수록 합계는 작아진다
+		for (int c = 0; c < n; c++) {
+			time_sum += atm[c].time * (n - c); // idx가 0인 것은 n번 더해지고 idx가 n인 것은 1번 더해진다. 즉, idx가 k인 것은 n-k번 더해진다 (0 <= k < n)
+		}
+		printf("%d\n", time_sum);
+	return 0;
+}
