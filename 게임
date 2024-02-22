@@ -1,0 +1,27 @@
+#include <stdio.h>
+
+int main() {
+	long long int X, Y;
+	scanf("%lld %lld", &X, &Y);
+	long long int Z = (Y * 100) / X;
+	double game_float = (double)(Z * X + X - 100 * Y) / (99 - Z); // Z*X가 int범위를 넘어갈 수 있기 때문에 long long int나 double을 사용해 준다
+	long long int game_int = (Z * X + X - 100 * Y) / (99 - Z);
+	if (Z >= 99) printf("%d\n", -1); // 
+	else {
+		if (game_float - game_int == 0) printf("%lld\n", game_int); // 소수점은 버리기 때문에 가우스를 생각해서 같을경우는 그냥 출력
+		else printf("%lld\n", game_int + 1); // 소수점 아래에 해당하는 숫자는 버려지기 때문에 1을 더해준다
+	}
+	return 0;
+}
+/*
+	n : 추가 게임 횟수
+	Z + 1 <= (Y + n) * 100 / (X + n) -> n = (Z * X + X - 100 * Y) / (99 - Z) : n번 더 했을때 Z가 최소 1만큼 변하면 되기때문
+	등호가 아닌 부등호로 표시하는 이유는 소수점이 있을 수도 있고 없을 수도 있어서
+	이때 Z + 1 = 100 or Z = 100이면 Y = X이기때문에 n은 변하지 않는다
+	Z > 99이면 Z + 1 = 100이므로 이 역시 Y = X이기 떄문에 n은 변하지 않는다
+	즉, Z >= 99이면 n은 변하지 않는다
+	Z < 99이면 n >= (Z * X + X - 100 * Y) / (99 - Z) 이 식을 편하게 쓸 수 있다
+	이때 n = N.xx라고하면 n = N이라는 값을 얻는다
+	N < n이므로  n >= (Z * X + X - 100 * Y) / (99 - Z)이 식을 만족하려면 n = N + 1이 되어야 한다
+	반면 n = N이면  n >= (Z * X + X - 100 * Y) / (99 - Z)이 식을 만족하기 때문에 그대로 쓰면 된다
+*/
