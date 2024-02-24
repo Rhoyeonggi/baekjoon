@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+double combi(int n, int r) { // 동쪽에서 순서에 상관없이 서쪽에 있는 개수만큼 고르면 저절로 위에서부터 차례대로 연결하면 되기 때문에 n개에서 r개를 뽑는 경우와 같다
+	double numerator = 1;
+	double denominator = 1;
+	for (int i = n; i > r; i--) { // nCr = n!/r!(n-r)!
+		numerator *= i; // n!/r!을 계산하기 위해서 n부터 (n-r+1)까지 곱해준다
+		denominator *= (i - r); // i=n이고 i=r+1까지 줄어들면서 곱해지기 때문에 (n-r)!을 계산할 수 있다
+	}
+	return numerator / denominator;
+}
+
+int main() {
+	int N, S, T;
+	scanf("%d", &T);
+	for (int t = 0; t < T; t++) {
+		scanf("%d %d", &S, &N);
+		printf("%.lf\n", combi(N, S)); // combination을 계산하는 과정에서 정수 범위를 벗어나기 때문에 double이라는 큰 수를 저장 할 수 있는 자료형 사용
+	}
+	return 0;
+}
