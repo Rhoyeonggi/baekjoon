@@ -25,6 +25,7 @@ int main() {
         printf("%d\n", c);
     } /*printf("%d %d\n", isPalindrome(str), c); 이렇게 작성하면 안되는 이유 :
       printf()를 호출할 때 인자로 isPalindrome(str)이 먼저 넘어가고 모든 처리가 끝난 후 증가된 c값이 넘어갈 거라고 보장할 수 없기때문
-      즉, isPallindrome(str)의 작업을 끝낸 뒤에 전역변수인 c를 출력해 주거나 다른 방식으로 코드를 작성 해야 한다*/
+      즉, isPallindrome(str)의 작업을 끝낸 뒤에 전역변수인 c를 출력해 주거나 다른 방식으로 코드를 작성 해야 한다
+      매우 희박하지만 함수와 변수를 동시에 전달할 경우에 순서를 잘못 전달 할 수 있으며, c가 카운트 중인데 함수가 먼저 return을 만나버리면 오유가 발생 할 수 있다*/
     return 0;
 }
