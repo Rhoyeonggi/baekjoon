@@ -1,0 +1,19 @@
+#include <stdio.h>
+
+long long int factorial(int n, int m, long long int r) {
+    if (n <= 1) return 1;
+    else if (m <= n) {
+        r *= m;
+        return factorial(n, m + 1, r); // n!은 n까지의 자연수를 모두 곱한 것이기 때문에 n까지 곱해주는 숫자를 증가해 준다 
+    }
+    return r;
+}
+
+int main() {
+    int num;
+    int multi = 1;
+    long long int result = 1; // 20!는 int범위를 넘어간다
+    scanf("%d", &num);
+    printf("%lld\n", factorial(num, multi, result));
+    return 0;
+}
