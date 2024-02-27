@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int sort[500000] = { 0 };
+int c = 0; // 만든 함수에 c를 따로 포함 시키기 싫어서 전역변수로 지정, K도 같은 이유
+int num = -1, K; // num = -1은 K보다 작으면 -1을 뽑기 위해서
+
+void merge(int arr[], int s, int m, int e) {
+    int i = s;
+    int j = m + 1;
+    int k = s;
+    while (i <= m && j <= e) {
+        if (arr[i] <= arr[j]) {
+            sort[k] = arr[i];
+            c++;
+            if (c == K) num = arr[i];
+            i++;
+        }
+        else {
+            sort[k] = arr[j];
+            c++;
+            if (c == K) num = arr[j];
+            j++;
+        }
+        k++;
+    }
+    if (i > m) {
+        for (int idx = j; idx <= e; idx++) {
+            sort[k++] = arr[idx];
+            c++;
+            if (c == K) num = arr[idx];
+        }
+    }
+    else {
+        for (int idx = i; idx <= m; idx++) {
+            sort[k++] = arr[idx];
+            c++;
+            if (c == K) num = arr[idx];
+        }
+    }
+    //이 부분까지 sort에 저장 하는 행동인데 저장 할 때 마다 카운트 1회가 되므로 c랑 K가 같아질 때 값을 num에 넣는다
+    for (int p = s; p <= e; p++) {
+        arr[p] = sort[p]; // 정렬한 것을 배열에 옮기기
+    }
+}
+
+void merge_sort(int arr[], int l, int r) { // 재귀함수를 이용한 분할 및 합치기
+    int mid = (l + r) / 2;
+    if (l < r) {
+        merge_sort(arr, l, mid); // 비교하기 위해 쪼개기
+        merge_sort(arr, mid + 1, r);
+        merge(arr, l, mid, r); // 비교하여 합치기
+    }
+}
+
+int main() {
+    int N;
+    scanf("%d %d", &N, &K);
+    int* merge_arr = (int*)calloc(N, sizeof(int));
+    for (int n = 0; n < N; n++) {
+        scanf("%d", &merge_arr[n]);
+    }
+    merge_sort(merge_arr, 0, N - 1);
+    printf("%d\n", num);
+    return 0;
+}
